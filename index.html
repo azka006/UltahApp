@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Sayang!</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Variabel CSS untuk tema */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      --secondary-gradient: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+      --accent-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --text-color: #5a3d5c;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 10px 30px rgba(160, 82, 140, 0.2);
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Global Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Splash Screen */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 1s ease-out;
+    }
+    
+    #splash-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .splash-content {
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+    }
+    
+    .splash-heart {
+      font-size: 5rem;
+      color: white;
+      margin-bottom: 1rem;
+      animation: pulse 1.5s infinite;
+    }
+    
+    .splash-text {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+    /* Container Styles */
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      animation: fadeIn 1s ease;
+    }
+
+    /* Heading Styles */
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+
+    /* Balloon Game */
+    #balloon-game {
+      display: none;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+    
+    .balloon {
+      width: 80px;
+      height: 100px;
+      background: var(--secondary-gradient);
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      position: absolute;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, opacity 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+    
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      width: 2px;
+      height: 15px;
+      background: white;
+      transform: translateX(-50%);
+    }
+    
+    .balloon:hover {
+      transform: scale(1.2) rotate(5deg);
+    }
+    
+    #balloon-counter {
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    #balloon-container {
+      min-height: 400px;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    /* Button Styles */
+    .btn {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      margin: 10px;
+    }
+    
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background: var(--secondary-gradient);
+      color: white;
+    }
+    
+    .btn-accent {
+      background: var(--accent-gradient);
+      color: var(--text-color);
+    }
+    
+    .btn-success {
+      background: var(--success-gradient);
+      color: white;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(160, 82, 140, 0.3);
+    }
+    
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Love Letter */
+    #love-letter {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeIn 1s ease;
+    }
+    
+    #typed-text {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin: 2rem 0;
+      text-align: left;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      min-height: 200px;
+    }
+    
+    .slideshow {
+      position: relative;
+      width: 250px;
+      margin: 2rem auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      height: 10%;
+    }
+    
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+    }
+    
+    .slide.active {
+      display: block;
+      animation: fadeIn 1s ease;
+    }
+    
+    .controls {
+      margin: 2rem 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Music Controls */
+    #music-controls {
+      margin: 1.5rem 0;
+    }
+
+    /* Floating Hearts */
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .heart {
+      position: absolute;
+      color: rgba(255, 105, 180, 0.7);
+      animation: float 8s ease-in-out infinite;
+      font-size: 1.5rem;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+      
+      .container {
+        width: 100%;
+        padding: 1.5rem;
+        border-radius: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      #typed-text, #balloon-counter {
+        font-size: 1.1rem;
+        min-height: 150px;
+      }
+      
+      .btn {
+        padding: 15px 25px;
+        font-size: 1.1rem;
+        width: 100%;
+        margin: 8px 0;
+      }
+      
+      .balloon {
+        width: 70px;
+        height: 90px;
+      }
+      
+      #balloon-container {
+        min-height: 300px;
+      }
+      
+      .slideshow {
+        height: 250px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Hearts Background -->
+  <div class="floating-hearts" id="floating-hearts"></div>
+
+  <!-- Splash Screen -->
+  <div id="splash-screen">
+    <div class="splash-content">
+      <div class="splash-heart">
+        <i class="fas fa-heart"></i>
+      </div>
+      <div class="splash-text">Loading Special nggo ayang Ellen...💖💖</div>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="container">
+    <!-- Balloon Game -->
+    <div id="balloon-game">
+      <div id="balloon-counter">
+        <i class="fas fa-birthday-cake"></i> pecahaken <span id="clicks-left">20</span> balon sayang ku 😁💖
+      </div>
+      <div id="balloon-container"></div>
+      <button id="continue-btn" class="btn btn-success" style="display:none;">
+        <i class="fas fa-envelope-open-text"></i> Surat Cinta Sayang ku 💖 🥰 
+      </button>
+    </div>
+
+    <!-- Love Letter -->
+    <div id="love-letter">
+      <h1><i class="fas fa-birthday-cake"></i> Happy Birthday, Sayangku Cinta💖🥰!</h1>
+      <div id="music-controls">
+          <button id="music-btn" class="btn btn-primary">
+            <i class="fas fa-play"></i> Setel lagu bund bari perfect 😁
+          </button>
+        </div>
+      <div id="typed-text"></div>
+      
+      <div class="slideshow">
+        <img src="foto-1.jpg" alt="Foto 1" class="slide">
+        <img src="foto-2.jpg" alt="Foto 2" class="slide">
+        <img src="foto-3.jpg" alt="Foto 3" class="slide">
+        <img src="foto-4.jpg" alt="Foto 4" class="slide">
+        <img src="foto-5.jpg" alt="Foto 5" class="slide">
+        <img src="foto-6.jpg" alt="Foto 6" class="slide">
+        <img src="foto-7.jpg" alt="Foto 7" class="slide">
+        <img src="foto-8.jpg" alt="Foto 8" class="slide">
+      </div>
+      
+      <div class="controls">
+        <button id="confetti-btn" class="btn btn-accent">
+          <i class="fas fa-gift"></i> Surprise!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    // Inisialisasi hearts floating
+    function createHearts() {
+      const container = document.getElementById('floating-hearts');
+      const heartsCount = 30;
+      
+      for (let i = 0; i < heartsCount; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '<i class="fas fa-heart"></i>';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = Math.random() * 100 + 'vh';
+        heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        heart.style.opacity = Math.random() * 0.5 + 0.3;
+        container.appendChild(heart);
+      }
+    }
+
+    // Splash Screen
+    setTimeout(() => {
+      document.getElementById('splash-screen').classList.add('hidden');
+      document.getElementById('balloon-game').style.display = 'block';
+      createHearts();
+    }, 4000);
+
+    // Balloon Game
+    const totalClicks = 20;
+    let clicksLeft = totalClicks;
+    const balloonContainer = document.getElementById('balloon-container');
+    const clicksLeftSpan = document.getElementById('clicks-left');
+    const continueBtn = document.getElementById('continue-btn');
+
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+      balloon.style.top = Math.random() * (window.innerHeight - 120) + 'px';
+      
+      // Warna gradient acak untuk balon
+      const gradients = [
+        'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
+        'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+        'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+        'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
+      ];
+      
+      balloon.style.background = gradients[Math.floor(Math.random() * gradients.length)];
+      
+      // Icon acak untuk balon
+      const icons = ['fa-heart', 'fa-gift', 'fa-star', 'fa-smile', 'fa-music', 'fa-cake-candles'];
+      balloon.innerHTML = `<i class="fas ${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
+      
+      balloon.onclick = () => {
+        balloon.style.opacity = '0';
+        balloon.style.transform = 'scale(0.5)';
+        setTimeout(() => balloon.remove(), 300);
+        
+        clicksLeft--;
+        clicksLeftSpan.textContent = clicksLeft;
+        
+        if (clicksLeft > 0) {
+          createBalloon();
+        } else {
+          continueBtn.style.display = 'flex';
+        }
+      };
+      
+      balloonContainer.appendChild(balloon);
+    }
+
+    for (let i = 0; i < 5; i++) createBalloon();
+
+    // Love Letter
+    function showLoveLetter() {
+      document.getElementById('balloon-game').style.display = 'none';
+      document.getElementById('love-letter').style.display = 'block';
+      
+      new Typed('#typed-text', {
+        strings: [
+          'Selamat Ulang tahun sayang ku 🥰💖. \n Bli kerasa sayang ku temu 4 tahun bae karo ayang ellen kuh 💖🥰. \n Semoga ayang ellen Sukses trus kedepan e, bahagia trus, aja mikiri bae menggawe sayang ku 💖🥰. \n semoga ayang ellen dadi anak kang di banggaaken ning mama karo papa karo dadi anak kang baik kanggo mama papa 💖🥰. \n Semoga ayang ellen gage dadi rabi e kita kang baik 💖🥰. \n doanang tahun 2027 sayang ku nikah e 💖🥰. \n\n Syukur pisan hubungan karo ayang Ellen kuh 💖🥰. sayaaaang pisaaan ning ayang Ellen kuh tanpa batas muachhh muuuaaacccchhhhh 💖 🥰 😍 😘😘😘😘😘😘😘 .........'
+        ],
+        typeSpeed: 100,
+        backSpeed: 0,
+        loop: false,
+        showCursor: true,
+        cursorChar: '•••'
+      });
+      
+      // Slideshow
+      const slides = document.querySelectorAll('.slide');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      showSlide(0);
+      setInterval(nextSlide, 5000);
+    }
+
+    // Event Listeners
+    document.getElementById('continue-btn').addEventListener('click', showLoveLetter);
+    
+    // Music Controls
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerHTML = '<i class="fas fa-pause"></i> Pause ';
+      } else {
+        music.pause();
+        musicBtn.innerHTML = '<i class="fas fa-play"></i> Putar Lagu sayang ku 💖🥰';
+      }
+    }
+    
+    musicBtn.addEventListener('click', toggleMusic);
+    
+    // Confetti
+    function startConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff758c', '#ff7eb3', '#a18cd1', '#fbc2eb', '#ffecd2']
+      });
+      
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        
+        confetti({
+          particleCount: 100,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+      }, 250);
+    }
+    
+    document.getElementById('confetti-btn').addEventListener('click', startConfetti);
+  </script>
+</body>
+</html>
